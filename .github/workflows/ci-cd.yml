@@ -11,6 +11,12 @@ jobs:
   validate-and-test:
     name: Validate, Test & Security Scan
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    env:
+      GITHUB_ACTOR: ${{ github.actor }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -37,17 +43,29 @@ jobs:
                 <password>${env.GITHUB_TOKEN}</password>
               </server>
             </servers>
+            <profiles>
+              <profile>
+                <id>github-packages</id>
+                <repositories>
+                  <repository>
+                    <id>github</id>
+                    <name>GitHub Packages</name>
+                    <url>https://maven.pkg.github.com/Nubo-Native-Platform/PICC-PC-Abstract-NNP-Platform</url>
+                    <snapshots>
+                      <enabled>true</enabled>
+                    </snapshots>
+                  </repository>
+                </repositories>
+              </profile>
+            </profiles>
+            <activeProfiles>
+              <activeProfile>github-packages</activeProfile>
+            </activeProfiles>
           </settings>
           EOF
-        env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Validate Maven POM
         run: mvn validate
-        env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Compile and Test
         run: mvn clean test
@@ -69,6 +87,9 @@ jobs:
     permissions:
       contents: read
       packages: write
+    env:
+      GITHUB_ACTOR: ${{ github.actor }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -95,14 +116,26 @@ jobs:
                 <password>${env.GITHUB_TOKEN}</password>
               </server>
             </servers>
+            <profiles>
+              <profile>
+                <id>github-packages</id>
+                <repositories>
+                  <repository>
+                    <id>github</id>
+                    <name>GitHub Packages</name>
+                    <url>https://maven.pkg.github.com/Nubo-Native-Platform/PICC-PC-Abstract-NNP-Platform</url>
+                    <snapshots>
+                      <enabled>true</enabled>
+                    </snapshots>
+                  </repository>
+                </repositories>
+              </profile>
+            </profiles>
+            <activeProfiles>
+              <activeProfile>github-packages</activeProfile>
+            </activeProfiles>
           </settings>
           EOF
-        env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to GitHub Packages
         run: mvn clean deploy -Pgithub-packages -DskipTests -Ddependency-check.skip=true
-        env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

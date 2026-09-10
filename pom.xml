@@ -26,6 +26,17 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/Nubo-Native-Platform/PICC-PC-Abstract-NNP-Platform</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
