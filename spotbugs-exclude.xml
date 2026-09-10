@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SpotBugs exclude filter.
+  Suppresses selected low-value findings while keeping
+  security-related findings active.
+-->
+<FindBugsFilter>
+
+    <!--
+      Common DTO/entity findings.
+      Review these periodically if your API exposes mutable objects.
+    -->
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP" />
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2" />
+    </Match>
+
+    <!-- Spring framework annotations -->
+    <Match>
+        <Bug pattern="SPRING_ENDPOINT" />
+    </Match>
+
+    <!-- Serialization -->
+    <Match>
+        <Bug pattern="SE_NO_SERIALVERSIONID" />
+    </Match>
+    <Match>
+        <Bug pattern="SE_BAD_FIELD" />
+    </Match>
+
+    <!-- Naming conventions -->
+    <Match>
+        <Bug pattern="NM_CONFUSING" />
+    </Match>
+    <Match>
+        <Bug pattern="NM_FIELD_NAMING_CONVENTION" />
+    </Match>
+
+    <!-- Private methods / dead code -->
+    <Match>
+        <Bug pattern="UPM_UNCALLED_PRIVATE_METHOD" />
+    </Match>
+    <Match>
+        <Bug pattern="DLS_DEAD_LOCAL_STORE" />
+    </Match>
+    <Match>
+        <Bug pattern="UC_USELESS_OBJECT" />
+    </Match>
+
+    <!--
+      Exception handling.
+      Keep these only if your project intentionally uses
+      broad exception handling and has reviewed the cases.
+    -->
+    <Match>
+        <Bug pattern="REC_CATCH_EXCEPTION" />
+    </Match>
+    <Match>
+        <Bug pattern="DE_MIGHT_IGNORE" />
+    </Match>
+
+    <!-- Nullability / redundant checks -->
+    <Match>
+        <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
+    </Match>
+    <Match>
+        <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE" />
+    </Match>
+    <Match>
+        <Bug pattern="NP_EQUALS_SHOULD_HANDLE_NULL_ARGUMENT" />
+    </Match>
+    <Match>
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+    </Match>
+    <Match>
+        <Bug pattern="NP_LOAD_OF_KNOWN_NULL_VALUE" />
+    </Match>
+
+    <!-- equals / hashCode -->
+    <Match>
+        <Bug pattern="BC_EQUALS_METHOD_SHOULD_WORK_FOR_ALL_OBJECTS" />
+    </Match>
+    <Match>
+        <Bug pattern="EQ_DOESNT_OVERRIDE_EQUALS" />
+    </Match>
+
+    <!-- Field initialization -->
+    <Match>
+        <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" />
+    </Match>
+
+    <!-- Performance / style -->
+    <Match>
+        <Bug pattern="DM_CONVERT_CASE" />
+    </Match>
+    <Match>
+        <Bug pattern="SBSC_USE_STRINGBUFFER_CONCATENATION" />
+    </Match>
+
+    <!-- Unicode -->
+    <Match>
+        <Bug pattern="IMPROPER_UNICODE" />
+    </Match>
+
+    <!-- Public primitive fields -->
+    <Match>
+        <Bug pattern="PA_PUBLIC_PRIMITIVE_ATTRIBUTE" />
+    </Match>
+
+    <!-- Inner classes -->
+    <Match>
+        <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+    </Match>
+
+</FindBugsFilter>
