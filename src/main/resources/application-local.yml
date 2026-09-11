@@ -1,0 +1,27 @@
+localconfig: 
+  application: 
+    - 
+      name: common
+      profiles:
+        - 
+          name: test
+          label: 
+            name: V1
+            properties: 
+              lkey: lvalue
+              errorMappings: classpath:local/error.json
+    - 
+      name: test-nnp-config
+      profiles:
+        - 
+          name: test
+          label: 
+            name: V1
+            properties: 
+              lkey: lSpecificValue
+              
+              
+        
+              
+     
+    

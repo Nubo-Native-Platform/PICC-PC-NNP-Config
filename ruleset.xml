@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Custom Ruleset"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.github.io/pmd-6.55.0/ruleset_2_0_0.xsd"
+         version="6.55.0">
+
+    <!-- Ruleset Description -->
+    <description>
+        A custom ruleset for PMD to ensure coding standards and best practices in Java projects.
+    </description>
+
+    <!-- Basic Rules -->
+    <rule ref="category/java/bestpractices.xml/AvoidDuplicateLiterals"/>
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateField"/>
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateMethod"/>
+    <rule ref="category/java/bestpractices.xml/SimplifyBooleanReturns"/>
+
+    <!-- Design Rules -->
+    <rule ref="category/java/design.xml/CyclomaticComplexity">
+        <properties>
+            <property name="reportLevel" value="10"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/design.xml/ExcessiveMethodLength">
+        <properties>
+            <property name="minimum" value="50"/>
+        </properties>
+    </rule>
+
+    <!-- Code Style -->
+    <rule ref="category/java/codestyle.xml/UnnecessaryConstructor"/>
+    <rule ref="category/java/codestyle.xml/FieldDeclarationsShouldBeAtStartOfClass"/>
+
+    <!-- Documentation -->
+    <rule ref="category/java/documentation.xml/CommentDefaultAccessModifier"/>
+
+    <!-- Performance -->
+    <rule ref="category/java/performance.xml/AvoidInstantiatingObjectsInLoops"/>
+    <rule ref="category/java/performance.xml/InefficientEmptyStringCheck"/>
+
+    <!-- Error Prone -->
+    <rule ref="category/java/errorprone.xml/UseEqualsToCompareStrings"/>
+    <rule ref="category/java/errorprone.xml/ProperLogger"/>
+
+    <!-- Naming Rules -->
+    <rule ref="category/java/naming.xml/VariableNamingConventions"/>
+    <rule ref="category/java/naming.xml/ClassNamingConventions"/>
+
+    <!-- Multithreading -->
+    <rule ref="category/java/multithreading.xml/DoNotUseThreads"/>
+
+</ruleset>

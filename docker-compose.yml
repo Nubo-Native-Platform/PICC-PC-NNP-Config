@@ -1,0 +1,53 @@
+services:
+  nnp-config:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${IMAGE_NAME:-picc-pc-nnp-config}:${IMAGE_TAG:-latest}
+    container_name: ${CONTAINER_NAME:-picc-pc-nnp-config}
+    ports:
+      - "${SERVER_PORT:-8888}:8888"
+    environment:
+      - SERVER_PORT=${SERVER_PORT:-8888}
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-jdbc,local}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+      - DB_HOST=${DB_HOST:-postgres}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=${DB_NAME:-nnp-core-comp}
+      - DB_URL=jdbc:postgresql://${DB_HOST:-postgres}:${DB_PORT:-5432}/${DB_NAME:-nnp-core-comp}
+      - LOGGING_LEVEL=${LOGGING_LEVEL:-INFO}
+      - QUANTUM_SAFE_SERVICE_URL=${QUANTUM_SAFE_SERVICE_URL:-http://quantum-safe-service:8080}
+      - HIKARI_MAX_POOL_SIZE=${HIKARI_MAX_POOL_SIZE:-20}
+      - HIKARI_MIN_IDLE=${HIKARI_MIN_IDLE:-10}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:${SERVER_PORT:-8888}/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 25s
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-16-alpine}
+    container_name: ${POSTGRES_CONTAINER_NAME:-nnp-config-postgres}
+    environment:
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+      - POSTGRES_DB=${DB_NAME:-nnp-core-comp}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-nnp-core-comp}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
